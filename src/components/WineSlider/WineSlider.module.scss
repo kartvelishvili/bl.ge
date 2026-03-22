@@ -9,13 +9,53 @@
   margin-bottom: 172px;
   flex-direction: column;
   gap: 70px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
 
-  @media screen and (max-width: 1024px ) {
-      gap: 32px;
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media screen and (max-width: 1024px) {
+    gap: 32px;
   }
 
   @media screen and (max-width: 768px) {
-      gap: 16px;
+    gap: 16px;
+  }
+}
+
+.titleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 600px;
+  padding: 0 16px;
+
+  @media screen and (max-width: 768px) {
+    gap: 12px;
+    max-width: 320px;
+  }
+}
+
+.titleLine {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(210, 174, 109, 0.4), transparent);
+}
+
+.title {
+  font-family: 'DejaVuSans', sans-serif;
+  font-size: 1.5rem;
+  color: #8D8D8D;
+  white-space: nowrap;
+  letter-spacing: 0.1em;
+
+  @media screen and (max-width: 768px) {
+    font-size: 1rem;
   }
 }
 
@@ -35,20 +75,32 @@
   justify-content: center;
   border-radius: 32px;
   overflow: hidden;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.4s ease, opacity 0.4s ease, box-shadow 0.4s ease;
+  border: 1px solid rgba(210, 174, 109, 0.08);
+
+  &:hover {
+    border-color: rgba(210, 174, 109, 0.2);
+  }
 
   @media screen and (max-width: 1024px) {
-    width: 172px;
-    height: 137px;
+    width: 172px !important;
+    height: 137px !important;
     border-radius: 24px;
-
   }
 
   @media screen and (max-width: 768px) {
-    width: 97px;
-    height: 77px;
+    width: 97px !important;
+    height: 77px !important;
     border-radius: 12px;
   }
+}
+
+.slideLink {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sliderImage {
@@ -59,16 +111,9 @@
 
   @media screen and (max-width: 1024px) {
     border-radius: 24px;
-
   }
 
   @media screen and (max-width: 768px) {
     border-radius: 12px;
   }
 }
-
-.swiper-slide:not(.swiper-slide-active) {
-  transform: scale(0.8);
-  opacity: 0.7;
-}
-

@@ -10,6 +10,7 @@ import { ManagementTeamEntity } from "./entities/management-team.entity";
 import { ProductEntity } from "./entities/product.entity";
 import { ProductCategoryEntity } from "./entities/product-category.entity";
 import { ProductItemEntity } from "./entities/product-item.entity";
+import { SiteSettingEntity } from "./entities/site-setting.entity";
 
 const entities = [
   UserEntity,
@@ -22,6 +23,7 @@ const entities = [
   ProductEntity,
   ProductCategoryEntity,
   ProductItemEntity,
+  SiteSettingEntity,
 ];
 
 const globalForDb = globalThis as unknown as {

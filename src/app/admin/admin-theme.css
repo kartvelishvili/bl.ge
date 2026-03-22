@@ -1,0 +1,278 @@
+/* ============================================================
+   Bolero Admin Theme System
+   Dual theme (dark / light) via [data-admin-theme] attribute
+   ============================================================ */
+
+/* ---- CSS Custom Properties ---- */
+[data-admin-theme="dark"] {
+  --admin-bg: #0a0e17;
+  --admin-card: #0f1420;
+  --admin-card-hover: #141a2a;
+  --admin-sidebar: #0f1420;
+  --admin-border: rgba(201, 168, 76, 0.18);
+  --admin-border-strong: rgba(201, 168, 76, 0.35);
+  --admin-text: #f0f0f0;
+  --admin-text-secondary: #a0a6b4;
+  --admin-text-muted: #6b7280;
+  --admin-accent: #C9A84C;
+  --admin-accent-hover: #d4b65e;
+  --admin-accent-soft: rgba(201, 168, 76, 0.08);
+  --admin-input-bg: #151b2e;
+  --admin-input-border: rgba(201, 168, 76, 0.3);
+  --admin-input-focus: rgba(201, 168, 76, 0.6);
+  --admin-input-text: #e8e8e8;
+  --admin-input-placeholder: #6b7280;
+  --admin-modal-overlay: rgba(0, 0, 0, 0.7);
+  --admin-divider: rgba(255, 255, 255, 0.06);
+  --admin-danger: #f87171;
+  --admin-danger-border: rgba(248, 113, 113, 0.3);
+  --admin-danger-bg: rgba(248, 113, 113, 0.08);
+  --admin-success: #34d399;
+  --admin-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --admin-ring: 0 0 0 3px rgba(201, 168, 76, 0.15);
+}
+
+[data-admin-theme="light"] {
+  --admin-bg: #f4f2ed;
+  --admin-card: #ffffff;
+  --admin-card-hover: #faf9f6;
+  --admin-sidebar: #1a1f2e;
+  --admin-border: rgba(201, 168, 76, 0.22);
+  --admin-border-strong: rgba(201, 168, 76, 0.4);
+  --admin-text: #1a1a2e;
+  --admin-text-secondary: #4b5563;
+  --admin-text-muted: #9ca3af;
+  --admin-accent: #b08c2e;
+  --admin-accent-hover: #c9a23a;
+  --admin-accent-soft: rgba(176, 140, 46, 0.08);
+  --admin-input-bg: #ffffff;
+  --admin-input-border: #d1c9b0;
+  --admin-input-focus: #b08c2e;
+  --admin-input-text: #1a1a2e;
+  --admin-input-placeholder: #9ca3af;
+  --admin-modal-overlay: rgba(0, 0, 0, 0.4);
+  --admin-divider: rgba(0, 0, 0, 0.08);
+  --admin-danger: #ef4444;
+  --admin-danger-border: rgba(239, 68, 68, 0.3);
+  --admin-danger-bg: rgba(239, 68, 68, 0.06);
+  --admin-success: #10b981;
+  --admin-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --admin-ring: 0 0 0 3px rgba(176, 140, 46, 0.12);
+}
+
+/* ---- Base Reset for Admin ---- */
+[data-admin-theme] {
+  color: var(--admin-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ---- Dark mode input improvements ---- */
+[data-admin-theme="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+[data-admin-theme="dark"] textarea,
+[data-admin-theme="dark"] select {
+  background-color: var(--admin-input-bg) !important;
+  border-color: var(--admin-input-border) !important;
+  color: var(--admin-input-text) !important;
+}
+
+[data-admin-theme="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus,
+[data-admin-theme="dark"] textarea:focus,
+[data-admin-theme="dark"] select:focus {
+  border-color: var(--admin-input-focus) !important;
+  box-shadow: var(--admin-ring) !important;
+}
+
+/* ---- Light mode - Override Tailwind dark colors ---- */
+
+/* Main backgrounds */
+[data-admin-theme="light"] .bg-\[\#0a0e17\] {
+  background-color: var(--admin-bg) !important;
+}
+
+[data-admin-theme="light"] .bg-\[\#0f1420\] {
+  background-color: var(--admin-card) !important;
+}
+
+/* Text colors */
+[data-admin-theme="light"] .text-white {
+  color: var(--admin-text) !important;
+}
+
+[data-admin-theme="light"] .text-gray-400 {
+  color: var(--admin-text-secondary) !important;
+}
+
+[data-admin-theme="light"] .text-gray-300 {
+  color: var(--admin-text-secondary) !important;
+}
+
+[data-admin-theme="light"] .text-gray-500 {
+  color: var(--admin-text-muted) !important;
+}
+
+[data-admin-theme="light"] .text-gray-600 {
+  color: var(--admin-text-muted) !important;
+}
+
+/* Accent text - darker gold for light bg */
+[data-admin-theme="light"] .text-\[\#C9A84C\] {
+  color: var(--admin-accent) !important;
+}
+
+/* Borders */
+[data-admin-theme="light"] .border-\[\#C9A84C\]\/20,
+[data-admin-theme="light"] .border-\[\#C9A84C\]\/15,
+[data-admin-theme="light"] .border-\[\#C9A84C\]\/10 {
+  border-color: var(--admin-border) !important;
+}
+
+[data-admin-theme="light"] .border-\[\#C9A84C\]\/30 {
+  border-color: var(--admin-border-strong) !important;
+}
+
+[data-admin-theme="light"] .divide-gray-700 > * + * {
+  border-color: var(--admin-divider) !important;
+}
+
+[data-admin-theme="light"] .border-white\/5 {
+  border-color: var(--admin-divider) !important;
+}
+
+/* Hover states */
+[data-admin-theme="light"] .hover\:bg-white\/5:hover {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+}
+
+[data-admin-theme="light"] .hover\:bg-\[\#C9A84C\]\/5:hover {
+  background-color: rgba(176, 140, 46, 0.08) !important;
+}
+
+[data-admin-theme="light"] .hover\:bg-\[\#C9A84C\]\/10:hover {
+  background-color: rgba(176, 140, 46, 0.12) !important;
+}
+
+[data-admin-theme="light"] .hover\:text-gray-200:hover {
+  color: var(--admin-text) !important;
+}
+
+/* Table row hover */
+[data-admin-theme="light"] .hover\:bg-white\/\[0\.02\]:hover {
+  background-color: rgba(0, 0, 0, 0.02) !important;
+}
+
+/* Inputs in light mode */
+[data-admin-theme="light"] input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+[data-admin-theme="light"] textarea,
+[data-admin-theme="light"] select {
+  background-color: var(--admin-input-bg) !important;
+  border-color: var(--admin-input-border) !important;
+  color: var(--admin-input-text) !important;
+}
+
+[data-admin-theme="light"] input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus,
+[data-admin-theme="light"] textarea:focus,
+[data-admin-theme="light"] select:focus {
+  border-color: var(--admin-input-focus) !important;
+  box-shadow: var(--admin-ring) !important;
+}
+
+[data-admin-theme="light"] input::placeholder,
+[data-admin-theme="light"] textarea::placeholder {
+  color: var(--admin-input-placeholder) !important;
+}
+
+/* Modal overlay */
+[data-admin-theme="light"] .bg-black\/60,
+[data-admin-theme="light"] .bg-black\/70 {
+  background-color: var(--admin-modal-overlay) !important;
+}
+
+/* Gold accent background button (keep but adjust) */
+[data-admin-theme="light"] .bg-\[\#C9A84C\] {
+  background-color: var(--admin-accent) !important;
+}
+
+[data-admin-theme="light"] .hover\:bg-\[\#d4b65e\]:hover {
+  background-color: var(--admin-accent-hover) !important;
+}
+
+/* Loading text */
+[data-admin-theme="light"] .animate-pulse {
+  color: var(--admin-accent) !important;
+}
+
+/* Scrollbar for light mode */
+[data-admin-theme="light"] ::-webkit-scrollbar {
+  width: 6px;
+}
+[data-admin-theme="light"] ::-webkit-scrollbar-track {
+  background: var(--admin-bg);
+}
+[data-admin-theme="light"] ::-webkit-scrollbar-thumb {
+  background: var(--admin-border-strong);
+  border-radius: 3px;
+}
+
+/* Dark scrollbar */
+[data-admin-theme="dark"] ::-webkit-scrollbar {
+  width: 6px;
+}
+[data-admin-theme="dark"] ::-webkit-scrollbar-track {
+  background: var(--admin-bg);
+}
+[data-admin-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(201, 168, 76, 0.2);
+  border-radius: 3px;
+}
+
+/* ---- Sidebar specific overrides for light mode ---- */
+/* Keep sidebar dark in light mode for contrast */
+[data-admin-theme="light"] aside {
+  background-color: var(--admin-sidebar) !important;
+}
+
+[data-admin-theme="light"] aside .text-gray-400 {
+  color: #9ca3af !important;
+}
+
+[data-admin-theme="light"] aside .hover\:text-gray-200:hover {
+  color: #e5e7eb !important;
+}
+
+[data-admin-theme="light"] aside .hover\:bg-white\/5:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ---- Card shadows for light mode ---- */
+[data-admin-theme="light"] .rounded-lg,
+[data-admin-theme="light"] .rounded-xl {
+  box-shadow: var(--admin-shadow);
+}
+
+/* ---- Label readability ---- */
+[data-admin-theme] label {
+  letter-spacing: 0.01em;
+}
+
+/* Red text stays the same in both modes */
+[data-admin-theme="light"] .text-red-400 {
+  color: var(--admin-danger) !important;
+}
+
+[data-admin-theme="light"] .border-red-500\/30 {
+  border-color: var(--admin-danger-border) !important;
+}
+
+[data-admin-theme="light"] .hover\:bg-red-500\/10:hover {
+  background-color: var(--admin-danger-bg) !important;
+}
+
+/* ---- Gradient line under logo ---- */
+[data-admin-theme="light"] .bg-gradient-to-r {
+  /* keep as-is for sidebar */
+}
+
+/* ---- Checkbox in gold theme ---- */
+[data-admin-theme] input[type="checkbox"] {
+  accent-color: var(--admin-accent);
+}

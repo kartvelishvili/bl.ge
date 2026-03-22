@@ -38,3 +38,4 @@ next-env.d.ts
 
 # migration scripts
 migrate.js
+write-scss.py

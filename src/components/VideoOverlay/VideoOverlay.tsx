@@ -4,26 +4,30 @@ import { FC, ReactNode, useEffect, useState } from "react";
 
 interface Props {
   children: ReactNode;
+  videoEnabled?: boolean;
 }
 
 const VideoOverlay: FC<Props> = (props) => {
-  const [isVideoHydrated, setIsVideoHydrated] = useState(false);
   const [isVideoPlayed, setIsVideoPlayed] = useState<boolean>(false);
   const IS_VIDEO_PLAYED_KEY = "isVideoPlayed";
 
   useEffect(() => {
-    setIsVideoHydrated(true);
+    const played = sessionStorage.getItem(IS_VIDEO_PLAYED_KEY) === "true";
+    setIsVideoPlayed(played);
 
-    const isVideoPlayed =
-      sessionStorage.getItem(IS_VIDEO_PLAYED_KEY) === "true";
-    setIsVideoPlayed(isVideoPlayed);
+    // If video is disabled via admin settings, skip it
+    if (props.videoEnabled === false || played) {
+      if (props.videoEnabled === false) setIsVideoPlayed(true);
+      const body = document.getElementsByTagName("body")[0];
+      if (body) body.style.overflowY = "auto";
+      return;
+    }
 
     const body = document.getElementsByTagName("body")[0];
-
     if (body) {
       body.style.overflowY = "hidden";
     }
-  }, []);
+  }, [props.videoEnabled]);
 
   const handleVideoEnd = () => {
     const body = document.getElementsByTagName("body")[0];
@@ -31,7 +35,6 @@ const VideoOverlay: FC<Props> = (props) => {
     setIsVideoPlayed(true);
     sessionStorage.setItem(IS_VIDEO_PLAYED_KEY, "true");
   };
-
 
   if (isVideoPlayed) {
     return props.children;

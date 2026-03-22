@@ -86,12 +86,23 @@ export default async function RootLayout({
   const { lang } = await params;
   const dictionary = (await getDictionary(lang)) as any;
 
+  // Fetch video setting from API
+  let videoEnabled = true;
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
+    const res = await fetch(`${baseUrl}/settings`, { cache: "no-store" });
+    if (res.ok) {
+      const settings = await res.json();
+      videoEnabled = settings.video_enabled !== "false";
+    }
+  } catch {}
+
   return (
     <html lang={lang}>
       <body
         className={`${dejavuSans.variable} ${notoSansGeorgianSemiCondensed.variable} ${notoSansGeorgian.variable} ${inder.variable} ${darkerGrotesque.variable}  antialiased`}
       >
-        <VideoOverlay>
+        <VideoOverlay videoEnabled={videoEnabled}>
           <div className="flex flex-col bg-[#0D1116]">
             {children}
             <Footer dictionary={dictionary} locale={lang} />
