@@ -1,0 +1,387 @@
+.popularWines {
+  width: 100%;
+  max-width: 1411px;
+  margin: 150.98px auto 0;
+  text-align: left;
+  padding: 40px;
+
+  .container {
+    width: 100%;
+    max-width: 1411px;
+    height: 633px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(218, 218, 206, 1);
+    padding: 40px 125px;
+    padding-right: 0 ;
+    border-radius: 48px;
+    position: relative;
+
+    @media screen and (max-width: 1024px) {
+      padding: 0;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      right: 15px;
+      top: 5px;
+      width: 400px;
+      height: 100%;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: top right;
+      opacity: 0.5;
+    }
+
+    .title {
+      position: absolute;
+      top: 0px;
+      z-index: 1000;
+      left: 52%;
+      transform: translateX(-50%);
+      color: #8d8d8d;
+      font-family: var(--font-dejavu-sans);
+      font-size: 32px;
+      font-weight: 400;
+      text-align: center;
+      margin-top: 56px;
+    }
+
+    .textSection {
+      max-width: 50%;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+
+      .subtitle {
+        font-size: 32px;
+        font-weight: 400;
+        color: rgba(187, 170, 88, 1);
+        font-family: var(--font-dejavu-sans);
+        line-height: 32px;
+      }
+
+      .text {
+        font-size: 16px;
+        font-weight: 700;
+        color: rgba(187, 170, 88, 1);
+        margin-top: -8px;
+        line-height: 18.63px;
+        font-family: var(--font-dejavu-sans);
+      }
+
+      .descriptionWrapper {
+        display: flex;
+        gap: 56px;
+        align-items: flex-start;
+
+        .description {
+          font-size: 16px;
+          color: rgba(60, 63, 73, 1);
+          line-height: 32px;
+          width: 401px;
+          font-family: var(--font-dejavu-sans);
+          font-weight: 400;
+        }
+
+        .wineDetails {
+          display: flex;
+          gap: 50px;
+          width: 457px;
+
+          .wineDetails2 {
+            margin-top: 48px;
+            display: flex;
+            gap: 50px;
+          }
+          .detailsColumn {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            .label {
+              font-size: 16px;
+              font-weight: 400;
+              color: rgba(187, 170, 88, 1);
+              font-family: var(--font-dejavu-sans);
+            }
+
+            .value {
+              font-size: 16px;
+              line-height: 16px;
+              font-weight: 400;
+              color: #333;
+              font-family: var(--font-dejavu-sans);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .pagination {
+    display: flex;
+    gap: 8px;
+    margin-top: 172.5px;
+    margin-left: 20px;
+
+    .dot {
+      width: 50px;
+      height: 11px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 5.5px;
+      opacity: 0.5;
+    }
+
+    .dot2 {
+      width: 11px;
+      height: 11px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 5.5px;
+      opacity: 0.5;
+    }
+  }
+
+  .imageSection {
+    img {
+      width: auto;
+      height: auto;
+    }
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .popularWines {
+    margin: 100px auto 0;
+    padding: 24px;
+
+    .container {
+      height: auto;
+      min-height: 580px;
+      padding: 32px 48px;
+      border-radius: 36px;
+
+      &::before {
+        width: 300px;
+      }
+
+      .title {
+        font-size: 28px;
+        margin-top: 48px;
+        width: 100%;
+        left: 50%;
+      }
+
+      .textSection {
+        max-width: 55%;
+        gap: 20px;
+
+        .subtitle {
+          font-size: 28px;
+          line-height: 28px;
+        }
+
+        .text {
+          font-size: 15px;
+          line-height: 17px;
+          margin-top: -6px;
+        }
+
+        .descriptionWrapper {
+          gap: 32px;
+
+          .description {
+            width: 320px;
+            font-size: 15px;
+            line-height: 28px;
+          }
+
+          .wineDetails {
+            width: auto;
+            gap: 40px;
+
+            .wineDetails2 {
+              margin-top: 40px;
+              gap: 40px;
+            }
+
+            .detailsColumn {
+              gap: 6px;
+
+              .label {
+                font-size: 15px;
+              }
+
+              .value {
+                font-size: 15px;
+                line-height: 15px;
+              }
+            }
+          }
+        }
+      }
+
+      .imageSection {
+        img {
+          width: 160px;
+          height: auto;
+        }
+      }
+    }
+
+    .pagination {
+      margin-top: 120px;
+      margin-left: 16px;
+
+      .dot {
+        width: 40px;
+        height: 10px;
+      }
+
+      .dot2 {
+        width: 10px;
+        height: 10px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .popularWines {
+    margin: 0;
+    padding: 16px;
+
+    .container {
+      height: auto;
+      border-radius: 24px;
+      background: rgba(218, 218, 206, 1);
+      position: relative;
+      margin-top: 72px;
+
+      .title {
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+        color: #8d8d8d;
+        margin: 0 0 16px;
+        padding-top: 8px;
+      }
+
+      .textSection {
+        width: 100%;
+        max-width: 100%;
+        gap: 8px;
+        margin-top: 24px;
+
+        .subtitle {
+          font-size: 16px;
+          line-height: normal;
+          margin: 0;
+          color: rgba(187, 170, 88, 1);
+        }
+
+        .text {
+          font-size: 12px;
+          line-height: normal;
+          margin: 0 0 8px 0;
+          color: rgba(187, 170, 88, 1);
+          font-weight: 400;
+        }
+
+        .descriptionWrapper {
+          flex-direction: column;
+          gap: 16px;
+
+          .description {
+            width: 100%;
+            font-size: 12px;
+            line-height: 22px;
+            margin: 0;
+          }
+
+          .wineDetails {
+            width: 100%;
+            
+            .mainDetails {
+              width: 100%;
+
+              .wineDetails, .wineDetails2 {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                margin: 0;
+                width: calc(100% - 100px);
+                margin-top: 10px;
+
+                .detailsColumn {
+                  gap: 4px;
+
+                  .label {
+                    font-size: 12px;
+                    line-height: normal;
+                    color: rgba(187, 170, 88, 1);
+                  }
+
+                  .value {
+                    font-size: 12px;
+                    line-height: normal;
+                    color: #333;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .imageSection {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 76px;
+
+        img {
+          width: 76px;
+          height: auto;
+          top: 136px;
+          position: relative;
+        }
+      }
+
+      .pagination {
+        width: 100%;
+        margin: 16px 0 0;
+        justify-content: center;
+
+        .dot {
+          width: 32px;
+          height: 8px;
+        }
+
+        .dot2 {
+          width: 8px;
+          height: 8px;
+        }
+      }
+    }
+  }
+}
+
+.swiperClass {
+  width: 100%;
+  height: 633px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(218, 218, 206, 1);
+  border-radius: 48px;
+}
+
+.image {
+  max-height: 730px;
+  margin-top: 150px;
+  margin-right: 25%;
+}
