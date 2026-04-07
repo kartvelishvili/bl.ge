@@ -8,6 +8,18 @@ import { Navigation } from "swiper/modules";
 import Link from "next/link";
 import { LocaleType } from "@/types/locale.type";
 
+const PdfModal = ({ url, onClose }: { url: string; onClose: () => void }) => {
+  const viewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(url)}&embedded=true`;
+  return (
+    <div className={styles.pdfOverlay} onClick={onClose}>
+      <div className={styles.pdfModal} onClick={(e) => e.stopPropagation()}>
+        <button className={styles.pdfCloseBtn} onClick={onClose}>✕</button>
+        <iframe src={viewerUrl} className={styles.pdfFrame} />
+      </div>
+    </div>
+  );
+};
+
 interface Props {
   item: IProductItem;
   similarItems: IProductItem[];
@@ -24,6 +36,7 @@ export const BoleroWines: React.FC<Props> = (props) => {
   const [imagesRightIconSrc, setImagesRightIconSrc] = useState(
     "/icons/arrow-left.svg",
   );
+  const [pdfOpen, setPdfOpen] = useState(false);
 
   const glasses = [
     {
@@ -209,14 +222,19 @@ export const BoleroWines: React.FC<Props> = (props) => {
           </div>
           <button
             className={styles.btn}
-            onClick={() => {
-              window.open(props.item.vinification.url, "_blank", "noopener,noreferrer");
-            }}
+            onClick={() => setPdfOpen(true)}
           >
             {props.item.alcohol >= 40
               ? props.dictionary["დისტილაციის პროცესი"]
               : props.dictionary?.["ვინიფიკაცია"]}
-          </button>{" "}
+          </button>
+          {pdfOpen && (
+            <PdfModal
+              url={props.item.vinification.url}
+              onClose={() => setPdfOpen(false)}
+            />
+          )}
+          {" "}
         </div>
         <div className={styles.rightColumn}>
           <div
