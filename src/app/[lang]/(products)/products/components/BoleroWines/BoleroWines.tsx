@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import styles from "./BoleroWines.module.scss";
 import { IProductItem } from "@/interfaces/product-item.interface";
 import Image from "next/image";
@@ -7,12 +7,20 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import Link from "next/link";
 import { LocaleType } from "@/types/locale.type";
+import { Document, Page, pdfjs } from "react-pdf";
+import "react-pdf/dist/Page/AnnotationLayer.css";
+import "react-pdf/dist/Page/TextLayer.css";
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 const PdfModal = ({ url, productId, locale, onClose }: { url: string; productId: number; locale: string; onClose: () => void }) => {
   const proxyUrl = `/api/pdf?url=${encodeURIComponent(url)}`;
   const fullPdfLink = `https://bolero.ge/api/pdf?url=${encodeURIComponent(url)}`;
-  const shortLabel = `bolero.ge/${locale}/products/${productId}/pdf`;
+  const shortLabel = `bolero.ge/${locale}/products/${productId}`;
   const [copied, setCopied] = useState(false);
+  const [numPages, setNumPages] = useState<number>(0);
+  const [containerWidth, setContainerWidth] = useState<number>(800);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(fullPdfLink).then(() => {
@@ -20,6 +28,26 @@ const PdfModal = ({ url, productId, locale, onClose }: { url: string; productId:
       setTimeout(() => setCopied(false), 2000);
     });
   };
+
+  const onDocumentLoadSuccess = useCallback(({ numPages }: { numPages: number }) => {
+    setNumPages(numPages);
+  }, []);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.clientWidth);
+      }
+    };
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
 
   return (
     <div className={styles.pdfOverlay} onClick={onClose}>
@@ -43,7 +71,23 @@ const PdfModal = ({ url, productId, locale, onClose }: { url: string; productId:
           </a>
           <button className={styles.pdfCloseBtn} onClick={onClose}>✕</button>
         </div>
-        <iframe src={proxyUrl} className={styles.pdfFrame} />
+        <div className={styles.pdfContent} ref={containerRef}>
+          <Document
+            file={proxyUrl}
+            onLoadSuccess={onDocumentLoadSuccess}
+            loading={<div className={styles.pdfLoading}>Loading PDF...</div>}
+            error={<div className={styles.pdfError}>Failed to load PDF</div>}
+          >
+            {Array.from(new Array(numPages), (_, index) => (
+              <Page
+                key={`page_${index + 1}`}
+                pageNumber={index + 1}
+                width={containerWidth - 32}
+                className={styles.pdfPage}
+              />
+            ))}
+          </Document>
+        </div>
       </div>
     </div>
   );
