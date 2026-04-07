@@ -210,10 +210,7 @@ export const BoleroWines: React.FC<Props> = (props) => {
           <button
             className={styles.btn}
             onClick={() => {
-              const link = document.createElement("a");
-              link.href = props.item.vinification.url;
-              link.download = `vinification-${props.item.name}`;
-              link.click();
+              window.open(props.item.vinification.url, "_blank", "noopener,noreferrer");
             }}
           >
             {props.item.alcohol >= 40
