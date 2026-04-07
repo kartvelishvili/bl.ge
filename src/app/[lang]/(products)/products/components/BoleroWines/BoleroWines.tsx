@@ -8,26 +8,36 @@ import { Navigation } from "swiper/modules";
 import Link from "next/link";
 import { LocaleType } from "@/types/locale.type";
 
-const PdfModal = ({ url, onClose }: { url: string; onClose: () => void }) => {
+const PdfModal = ({ url, pageUrl, onClose }: { url: string; pageUrl: string; onClose: () => void }) => {
   const proxyUrl = `/api/pdf?url=${encodeURIComponent(url)}`;
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(pageUrl).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
   return (
     <div className={styles.pdfOverlay} onClick={onClose}>
       <div className={styles.pdfModal} onClick={(e) => e.stopPropagation()}>
         <div className={styles.pdfToolbar}>
-          <a
-            href={proxyUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.pdfLink}
-          >
-            bolero.ge
-          </a>
-          <a
-            href={proxyUrl}
-            download
-            className={styles.pdfDownloadBtn}
-          >
-            ⬇ Download
+          <button className={styles.pdfCopyLink} onClick={handleCopy} title="Copy link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+            </svg>
+            <span>{pageUrl.replace('https://', '')}</span>
+            <span className={styles.pdfCopiedBadge} data-visible={copied}>Copied!</span>
+          </button>
+          <a href={proxyUrl} download className={styles.pdfDownloadBtn}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Download
           </a>
           <button className={styles.pdfCloseBtn} onClick={onClose}>✕</button>
         </div>
@@ -248,6 +258,7 @@ export const BoleroWines: React.FC<Props> = (props) => {
           {pdfOpen && (
             <PdfModal
               url={props.item.vinification.url}
+              pageUrl={`https://bolero.ge/${props.locale}/products/${props.item.id}`}
               onClose={() => setPdfOpen(false)}
             />
           )}
