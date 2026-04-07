@@ -668,19 +668,60 @@
   background: #1a1a1a;
   border-radius: 12px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.pdfToolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  background: #111;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.pdfLink {
+  color: rgba(210, 174, 109, 1);
+  font-family: "dejavusans";
+  font-size: 14px;
+  text-decoration: none;
+  padding: 6px 14px;
+  border: 1px solid rgba(210, 174, 109, 0.3);
+  border-radius: 6px;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(210, 174, 109, 0.1);
+  }
+}
+
+.pdfDownloadBtn {
+  color: #fff;
+  font-family: "dejavusans";
+  font-size: 14px;
+  text-decoration: none;
+  padding: 6px 14px;
+  background: rgba(210, 174, 109, 0.15);
+  border: 1px solid rgba(210, 174, 109, 0.3);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(210, 174, 109, 0.3);
+  }
 }
 
 .pdfCloseBtn {
-  position: absolute;
-  top: 12px;
-  right: 16px;
-  z-index: 10;
-  background: rgba(0, 0, 0, 0.6);
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
-  font-size: 20px;
-  width: 36px;
-  height: 36px;
+  font-size: 18px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
@@ -695,6 +736,6 @@
 
 .pdfFrame {
   width: 100%;
-  height: 100%;
+  flex: 1;
   border: none;
 }

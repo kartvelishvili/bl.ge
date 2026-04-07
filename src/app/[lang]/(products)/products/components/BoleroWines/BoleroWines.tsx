@@ -9,12 +9,29 @@ import Link from "next/link";
 import { LocaleType } from "@/types/locale.type";
 
 const PdfModal = ({ url, onClose }: { url: string; onClose: () => void }) => {
-  const viewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(url)}&embedded=true`;
+  const proxyUrl = `/api/pdf?url=${encodeURIComponent(url)}`;
   return (
     <div className={styles.pdfOverlay} onClick={onClose}>
       <div className={styles.pdfModal} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.pdfCloseBtn} onClick={onClose}>✕</button>
-        <iframe src={viewerUrl} className={styles.pdfFrame} />
+        <div className={styles.pdfToolbar}>
+          <a
+            href={proxyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.pdfLink}
+          >
+            bolero.ge
+          </a>
+          <a
+            href={proxyUrl}
+            download
+            className={styles.pdfDownloadBtn}
+          >
+            ⬇ Download
+          </a>
+          <button className={styles.pdfCloseBtn} onClick={onClose}>✕</button>
+        </div>
+        <iframe src={proxyUrl} className={styles.pdfFrame} />
       </div>
     </div>
   );
