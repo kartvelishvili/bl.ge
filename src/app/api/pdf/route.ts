@@ -4,6 +4,7 @@ const ALLOWED_HOST = "s3.iserv.ge";
 
 export async function GET(req: NextRequest) {
   const url = req.nextUrl.searchParams.get("url");
+  const isDownload = req.nextUrl.searchParams.get("download") === "1";
 
   if (!url) {
     return NextResponse.json({ error: "Missing url" }, { status: 400 });
@@ -28,10 +29,13 @@ export async function GET(req: NextRequest) {
   const contentType = resp.headers.get("content-type") || "application/pdf";
   const buf = await resp.arrayBuffer();
 
+  const filename = decodeURIComponent(parsed.pathname.split("/").pop() || "document.pdf");
+  const disposition = isDownload ? `attachment; filename="${filename}"` : "inline";
+
   return new NextResponse(buf, {
     headers: {
       "Content-Type": contentType,
-      "Content-Disposition": "inline",
+      "Content-Disposition": disposition,
       "Cache-Control": "public, max-age=86400",
     },
   });

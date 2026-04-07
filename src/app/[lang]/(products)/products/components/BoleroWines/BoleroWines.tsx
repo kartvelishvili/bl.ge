@@ -33,7 +33,7 @@ const PdfModal = ({ url, productId, locale, onClose }: { url: string; productId:
             <span>{shortLabel}</span>
             <span className={styles.pdfCopiedBadge} data-visible={copied}>Copied!</span>
           </button>
-          <a href={proxyUrl} download className={styles.pdfDownloadBtn}>
+          <a href={`${proxyUrl}&download=1`} className={styles.pdfDownloadBtn}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
               <polyline points="7 10 12 15 17 10" />
