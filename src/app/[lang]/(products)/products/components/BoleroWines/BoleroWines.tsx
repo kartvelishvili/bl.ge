@@ -16,8 +16,8 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 
 const PdfModal = ({ url, productId, locale, onClose }: { url: string; productId: number; locale: string; onClose: () => void }) => {
   const proxyUrl = `/api/pdf?url=${encodeURIComponent(url)}`;
-  const shortLink = `https://bolero.ge/api/vinification/${productId}`;
-  const shortLabel = `bolero.ge/api/vinification/${productId}`;
+  const shortLink = `https://bolero.ge/${locale}/vinification/${productId}`;
+  const shortLabel = `bolero.ge/${locale}/vinification/${productId}`;
   const [copied, setCopied] = useState(false);
   const [numPages, setNumPages] = useState<number>(0);
   const [containerWidth, setContainerWidth] = useState<number>(800);
