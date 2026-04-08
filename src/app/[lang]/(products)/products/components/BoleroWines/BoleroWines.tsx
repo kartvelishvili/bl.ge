@@ -10,23 +10,42 @@ import { LocaleType } from "@/types/locale.type";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
+import QRCode from "qrcode";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 const PdfModal = ({ url, productId, locale, onClose }: { url: string; productId: number; locale: string; onClose: () => void }) => {
   const proxyUrl = `/api/pdf?url=${encodeURIComponent(url)}`;
-  const fullPdfLink = `https://bolero.ge/api/pdf?url=${encodeURIComponent(url)}`;
-  const shortLabel = `bolero.ge/${locale}/products/${productId}`;
+  const shortLink = `https://bolero.ge/api/vinification/${productId}`;
+  const shortLabel = `bolero.ge/api/vinification/${productId}`;
   const [copied, setCopied] = useState(false);
   const [numPages, setNumPages] = useState<number>(0);
   const [containerWidth, setContainerWidth] = useState<number>(800);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [qrOpen, setQrOpen] = useState(false);
+  const [qrDataUrl, setQrDataUrl] = useState<string>("");
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(fullPdfLink).then(() => {
+    navigator.clipboard.writeText(shortLink).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     });
+  };
+
+  const handleQrToggle = async () => {
+    if (qrOpen) {
+      setQrOpen(false);
+      return;
+    }
+    if (!qrDataUrl) {
+      const dataUrl = await QRCode.toDataURL(shortLink, {
+        width: 280,
+        margin: 2,
+        color: { dark: "#1a1a1a", light: "#ffffff" },
+      });
+      setQrDataUrl(dataUrl);
+    }
+    setQrOpen(true);
   };
 
   const onDocumentLoadSuccess = useCallback(({ numPages }: { numPages: number }) => {
@@ -61,7 +80,18 @@ const PdfModal = ({ url, productId, locale, onClose }: { url: string; productId:
             <span>{shortLabel}</span>
             <span className={styles.pdfCopiedBadge} data-visible={copied}>Copied!</span>
           </button>
-          <a href={`${proxyUrl}&download=1`} className={styles.pdfDownloadBtn}>
+          <button className={styles.pdfQrBtn} onClick={handleQrToggle} title="QR Code">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="2" width="8" height="8" rx="1" />
+              <rect x="14" y="2" width="8" height="8" rx="1" />
+              <rect x="2" y="14" width="8" height="8" rx="1" />
+              <rect x="14" y="14" width="4" height="4" rx="0.5" />
+              <line x1="22" y1="14" x2="22" y2="18" />
+              <line x1="18" y1="22" x2="22" y2="22" />
+            </svg>
+            QR
+          </button>
+          <a href={`/api/vinification/${productId}?download=1`} className={styles.pdfDownloadBtn}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
               <polyline points="7 10 12 15 17 10" />
@@ -71,6 +101,17 @@ const PdfModal = ({ url, productId, locale, onClose }: { url: string; productId:
           </a>
           <button className={styles.pdfCloseBtn} onClick={onClose}>✕</button>
         </div>
+        {qrOpen && (
+          <div className={styles.qrOverlay} onClick={() => setQrOpen(false)}>
+            <div className={styles.qrPopup} onClick={(e) => e.stopPropagation()}>
+              <button className={styles.qrCloseBtn} onClick={() => setQrOpen(false)}>✕</button>
+              {qrDataUrl && (
+                <img src={qrDataUrl} alt="QR Code" className={styles.qrImage} />
+              )}
+              <p className={styles.qrLabel}>{shortLabel}</p>
+            </div>
+          </div>
+        )}
         <div className={styles.pdfContent} ref={containerRef}>
           <Document
             file={proxyUrl}

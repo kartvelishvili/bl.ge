@@ -11,6 +11,7 @@
   "dependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/qrcode": "^1.5.6",
     "antd": "^5.29.3",
     "aws-sdk": "^2.1693.0",
     "bcryptjs": "^3.0.3",
@@ -21,6 +22,7 @@
     "mysql2": "^3.17.4",
     "next": "^15.5.12",
     "next-intl": "^4.8.3",
+    "qrcode": "^1.5.4",
     "qs": "^6.15.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
